@@ -8,7 +8,7 @@ They pledged for the help. For the help against magic-nullifying alchemy of the 
 
 The demon was appeased by the despair, the anguish and the wraith of the summoners. Or, maybe, he was just entertained...
 
-They say, the demon summoned was none else than Belial, Prince of Rejected and Lawless themselves... and the magic he taught... was worse than one could imagine in the wildest nightmares.
+In any case, he taught them a new way of performing their rituals. The gardens, the foraging, the alchemy, all of that was no longer needed... only the need for revenge... and blood.
 
 # TODO
 

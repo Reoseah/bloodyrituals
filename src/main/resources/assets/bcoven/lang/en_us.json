@@ -1,4 +1,7 @@
 {
   "itemGroup.bcoven.main": "Bloody Coven",
-  "block.bcoven.blood_stained_cobblestone": "Blood Stained Cobblestone"
+  "block.bcoven.blood_stained_cobblestone": "Blood Stained Cobblestone",
+  "item.bcoven.blood_clot": "Blood Clot",
+  "item.bcoven.beast_fang": "Beast Fang",
+  "item.bcoven.witch_eye": "Witch Eye"
 }
