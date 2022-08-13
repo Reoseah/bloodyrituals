@@ -1,38 +1,31 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "bcoven",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Bloody Coven",
+  "description": "..their art was decimated. In the hidden grove, using last ingredients they had, they summoned a demon.\n\nThey pledged for the help. For the help against magic-nullifying alchemy of the cowards proclaiming themselves hunters. And for the revenge.",
   "authors": [
-    "Me!"
+    "Reoseah"
   ],
-  "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
-  },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "ARR",
+  "icon": "assets/bcoven/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "io.github.reoseah.bcoven.BloodyCoven"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "bcoven.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.14.6",
-    "fabric": "*",
-    "minecraft": "~1.19",
-    "java": ">=17"
+    "fabric": "*"
   },
   "suggests": {
-    "another-mod": "*"
   }
 }
