@@ -1,10 +1,13 @@
 package io.github.reoseah.bcoven;
 
+import io.github.reoseah.bcoven.block.RuneBlock;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
@@ -22,6 +25,10 @@ public class BloodyCoven implements ModInitializer {
     public void onInitialize() {
         Blocks.register();
         Items.register();
+
+        // FIXME move to client side only
+        BlockRenderLayerMap.INSTANCE.putBlock(Blocks.BLOOD_RUNE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Blocks.BLOOD_GLYPH, RenderLayer.getCutout());
     }
 
     public static Identifier id(String path) {
@@ -30,9 +37,13 @@ public class BloodyCoven implements ModInitializer {
 
     public static class Blocks {
         public static final Block BLOOD_STAINED_COBBLESTONE = new Block(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(2.0F, 6.0F));
+        public static final Block BLOOD_RUNE = new RuneBlock(AbstractBlock.Settings.of(Material.DECORATION).strength(3.0F).noCollision().nonOpaque());
+        public static final Block BLOOD_GLYPH = new RuneBlock(AbstractBlock.Settings.of(Material.DECORATION).strength(3.0F).noCollision().nonOpaque());
 
         public static void register() {
             register("blood_stained_cobblestone", BLOOD_STAINED_COBBLESTONE);
+            register("blood_rune", BLOOD_RUNE);
+            register("blood_glyph", BLOOD_GLYPH);
         }
 
         private static void register(String name, Block entry) {
@@ -43,7 +54,7 @@ public class BloodyCoven implements ModInitializer {
     public static class Items {
         public static final Item BLOOD_STAINED_COBBLESTONE = new BlockItem(Blocks.BLOOD_STAINED_COBBLESTONE, new Item.Settings().group(GROUP));
 
-        public static final Item BLOOD_CLOT = new Item(new Item.Settings().group(GROUP).food(new FoodComponent.Builder().hunger(1).statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 10 * 20), 0.9F).alwaysEdible().build()));
+        public static final Item BLOOD_CLOT = new AliasedBlockItem(Blocks.BLOOD_RUNE, new Item.Settings().group(GROUP));
         public static final Item BEAST_FANG = new Item(new Item.Settings().group(GROUP));
         public static final Item WITCH_EYE = new Item(new Item.Settings().group(GROUP).food(new FoodComponent.Builder().hunger(1).statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 10 * 20), 1.0F).alwaysEdible().build()));
 
