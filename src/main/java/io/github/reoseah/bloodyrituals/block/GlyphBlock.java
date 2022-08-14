@@ -17,7 +17,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
 public class GlyphBlock extends Block {
-    public static final Property<Direction> TYPE = EnumProperty.of("type", Direction.class, dir -> dir.getAxis().isHorizontal());
+    public static final Property<Direction> TYPE = EnumProperty.of("type", Direction.class);
 
     protected static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 1, 14);
 
@@ -33,7 +33,8 @@ public class GlyphBlock extends Block {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         for (Direction direction : Direction.Type.HORIZONTAL) {
             if (!ctx.getWorld().getBlockState(ctx.getBlockPos().offset(direction)).isOf(this)) {
-                return this.getDefaultState().with(TYPE, ctx.getPlayerFacing());
+                Direction type = ctx.getPlayer() != null && ctx.getPlayer().isSneaking() ? ctx.getPlayerFacing() : Direction.byId(ctx.getWorld().getRandom().nextInt(6));
+                return this.getDefaultState().with(TYPE, type);
             }
         }
         return BloodyRituals.Blocks.CENTER_GLYPH.getDefaultState();

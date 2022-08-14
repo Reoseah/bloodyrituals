@@ -1,0 +1,12 @@
+{
+  "type": "bloodyrituals:ritual",
+  "ingredients": [
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "effect": "bloodyrituals:test"
+}
