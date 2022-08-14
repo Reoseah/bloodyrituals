@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
+import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -19,10 +20,16 @@ import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.UUID;
+
 public class BloodyRituals implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("bloodyrituals");
 
-    public static final ItemGroup GROUP = FabricItemGroupBuilder.build(id("main"), () -> new ItemStack(Items.BLOOD_STAINED_COBBLESTONE));
+    public static final ItemGroup GROUP = FabricItemGroupBuilder.build(id("main"), () -> {
+        ItemStack stack = new ItemStack(Items.BOLINE);
+        stack.getOrCreateNbt().putUuid("TargetUUID", new UUID(0L, 0L));
+        return stack;
+    });
 
     @Override
     public void onInitialize() {
@@ -32,6 +39,8 @@ public class BloodyRituals implements ModInitializer {
         // FIXME move to client side only
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.BLOOD_RUNE, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.CENTER_GLYPH, RenderLayer.getCutout());
+
+        ModelPredicateProviderRegistry.register(Items.BOLINE, id("has_target"), (stack, world, entity, seed) -> BolineItem.hasTarget(stack) ? 1F : 0F);
     }
 
     public static Identifier id(String path) {
@@ -78,7 +87,7 @@ public class BloodyRituals implements ModInitializer {
     }
 
     public enum ToolMaterials implements ToolMaterial {
-        BOLINE(1, 131, 4.0F, 1.0F, 5, Ingredient.ofItems(net.minecraft.item.Items.IRON_INGOT));
+        BOLINE(1, 250, 4.0F, 1.0F, 18, Ingredient.ofItems(net.minecraft.item.Items.IRON_INGOT));
 
         private final int miningLevel;
         private final int itemDurability;

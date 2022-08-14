@@ -11,6 +11,12 @@
     },
     "type=east": {
       "model": "bloodyrituals:block/east_glyph"
+    },
+    "type=up": {
+      "model": "bloodyrituals:block/up_glyph"
+    },
+    "type=down": {
+      "model": "bloodyrituals:block/down_glyph"
     }
   }
 }

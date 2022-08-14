@@ -2,5 +2,13 @@
   "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "bloodyrituals:item/boline"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "bloodyrituals:has_target": 1
+      },
+      "model": "bloodyrituals:item/blood_covered_boline"
+    }
+  ]
 }

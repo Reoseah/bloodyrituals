@@ -4,6 +4,8 @@
   "block.bloodyrituals.glyph": "Bloody Glyph",
   "block.bloodyrituals.center_glyph": "Central Bloody Glyph",
   "item.bloodyrituals.boline": "Boline",
+  "item.bloodyrituals.boline.blood_covered": "Blood-Covered Boline",
+  "item.bloodyrituals.boline.target_player": "Blood from %s",
   "item.bloodyrituals.blood_clot": "Blood Clot",
   "item.bloodyrituals.beast_fang": "Beast Fang",
   "item.bloodyrituals.witch_eye": "Witch Eye"
