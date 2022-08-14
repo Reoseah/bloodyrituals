@@ -14,12 +14,12 @@ In any case, he taught them a new way of performing their rituals. The gardens, 
 
 > basically, replacing gardening from Witchery with butchering both enemies and innocents and paying for rituals with your max hp
 
-- [+] Blood and Glyphs
-  - [+] Normal Glyphs
-  - [+] Center Glyph - placed when four normal glyphs are around
-  - [+] Blood Clot item - places blood glyphs
+- [x] Blood and Glyphs
+  - [x] Normal Glyphs
+  - [x] Center Glyph - placed when four normal glyphs are around
+  - [x] Blood Clot item - places blood glyphs
 
-- [+] Boline item - collect materials and run rituals
+- [x] Boline item - collect materials and run rituals
   - [ ] drop new ingredients from entities
   - [ ] remember last damaged entity, changing texture to blood covered one and displaying entity name in tooltip
 
