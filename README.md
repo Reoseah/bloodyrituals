@@ -14,14 +14,18 @@ In any case, he taught them a new way of performing their rituals. The gardens, 
 
 > basically, replacing gardening from Witchery with butchering both enemies and innocents and paying for rituals with your max hp
 
-- blood item, maybe called Coagulated Blood or Blood Clot
-- blood runes, which are placed by using blood item (or compatible items from other mods?)
-- heart rune, placed with blood item with 4 normal runes at its sides placed before it
-- butcher enchantment for swords, drops mod items from killed entities (blood clot, beast fangs, witch eye, etc...) and is incompatible with looting
-- ritual items, apart from blood clot: represent the strength of particular entity with a somewhat related body part (e.g. wolves – strength, bite – fangs; witches, illusioners, evokers – knowledge, perception - eyes) or just grotesque (villager meat)
-- boline item, special weapon used to activate rites; using boline on an entity with leave a keep a trace of their blood. activating a ritual with blood on the boline will target that entity.
-- hemorrhage effect, affected entities slowly lose hp and can die from this effect
-- ritual system:
+- [+] Blood and Glyphs
+  - [+] Normal Glyphs
+  - [+] Center Glyph - placed when four normal glyphs are around
+  - [+] Blood Clot item - places blood glyphs
+
+- [+] Boline item - collect materials and run rituals
+  - [ ] drop new ingredients from entities
+  - [ ] remember last damaged entity, changing texture to blood covered one and displaying entity name in tooltip
+
+- [ ] Hemorrhage effect, affected entities slowly lose hp and can die from this effect
+
+- [ ] Ritual system:
     * rituals performed by dropping items atop of a heart rune, then activating the rune and waiting for items to be consumed
     * heart rune has to be surrounded by 4 normal runes, some rituals might use additional runes to shape the magic or increase the range of affected area
     * rituals are paid with the health of caster or casters, most advanced rituals reduce health permanently (i.e. creating blood golems/homunculi)

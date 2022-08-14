@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "bcoven:block/blood_stained_cobblestone"
-  }
-}

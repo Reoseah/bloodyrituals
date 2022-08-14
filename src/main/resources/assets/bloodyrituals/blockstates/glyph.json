@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "type=north": {
+      "model": "bloodyrituals:block/north_glyph"
+    },
+    "type=south": {
+      "model": "bloodyrituals:block/south_glyph"
+    },
+    "type=west": {
+      "model": "bloodyrituals:block/west_glyph"
+    },
+    "type=east": {
+      "model": "bloodyrituals:block/east_glyph"
+    }
+  }
+}

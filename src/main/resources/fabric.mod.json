@@ -1,25 +1,25 @@
 {
   "schemaVersion": 1,
-  "id": "bcoven",
+  "id": "bloodyrituals",
   "version": "${version}",
 
-  "name": "Bloody Coven",
+  "name": "Bloody Rituals",
   "description": "..their art was decimated. In the hidden grove, using last ingredients they had, they summoned a demon.\n\nThey pledged for the help. For the help against magic-nullifying alchemy of the cowards proclaiming themselves hunters. And for the revenge.",
   "authors": [
     "Reoseah"
   ],
 
   "license": "ARR",
-  "icon": "assets/bcoven/icon.png",
+  "icon": "assets/bloodyrituals/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.reoseah.bcoven.BloodyCoven"
+      "io.github.reoseah.bloodyrituals.BloodyRituals"
     ]
   },
   "mixins": [
-    "bcoven.mixins.json"
+    "bloodyrituals.mixins.json"
   ],
 
   "depends": {
