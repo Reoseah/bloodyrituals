@@ -49,7 +49,7 @@ public class BolineItem extends SwordItem {
             stack.getOrCreateNbt().putBoolean("TargetIsPlayer", true);
         } else if (target instanceof MerchantEntity || target instanceof WitchEntity || target instanceof IllagerEntity) {
             stack.getOrCreateNbt().putUuid("TargetUUID", target.getUuid());
-            stack.getOrCreateNbt().putString("TargetName", target.getDisplayName().toString());
+            stack.getOrCreateNbt().putString("TargetName", target.getDisplayName().getString());
             stack.getOrCreateNbt().putBoolean("TargetIsPlayer", false);
         }
         return super.postHit(stack, target, attacker);
