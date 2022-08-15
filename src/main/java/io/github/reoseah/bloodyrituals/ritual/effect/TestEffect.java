@@ -15,19 +15,22 @@ public class TestEffect extends RitualEffect {
     public void addSteps(Collection<RitualStep> steps) {
         steps.add(new RitualStep() {
             @Override
-            public TickResult tick(CenterGlyphBlockEntity glyph) {
-                World world = Objects.requireNonNull(glyph.getWorld());
-                BlockPos pos = Objects.requireNonNull(glyph.getPos());
+            public TickResult tick(CenterGlyphBlockEntity glyph, int time) {
+                if (time % 20 == 0) {
+                    World world = Objects.requireNonNull(glyph.getWorld());
+                    BlockPos pos = Objects.requireNonNull(glyph.getPos());
 
-                for (int dx = -5; dx <= 5; dx++) {
-                    for (int dz = -5; dz <= 5; dz++) {
-                        if (world.isAir(pos.add(dx, 0, dz)) && world.canPlace(Blocks.FIRE.getDefaultState(), pos.add(dx, 0, dz), ShapeContext.absent())) {
-                            world.setBlockState(pos.add(dx, 0, dz), Blocks.FIRE.getDefaultState());
+                    for (int dx = -5; dx <= 5; dx++) {
+                        for (int dz = -5; dz <= 5; dz++) {
+                            if (world.isAir(pos.add(dx, 0, dz)) && world.canPlace(Blocks.FIRE.getDefaultState(), pos.add(dx, 0, dz), ShapeContext.absent())) {
+                                world.setBlockState(pos.add(dx, 0, dz), Blocks.FIRE.getDefaultState());
+                            }
                         }
                     }
-                }
 
-                return TickResult.COMPLETE;
+                    return TickResult.COMPLETE;
+                }
+                return TickResult.CONTINUE;
             }
         });
     }

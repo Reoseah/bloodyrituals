@@ -1,9 +1,15 @@
 package io.github.reoseah.bloodyrituals.ritual.step;
 
+import io.github.reoseah.bloodyrituals.BloodyRituals;
 import io.github.reoseah.bloodyrituals.block.entity.CenterGlyphBlockEntity;
 import io.github.reoseah.bloodyrituals.recipe.RitualRecipe;
+import io.github.reoseah.bloodyrituals.ritual.RitualEvent;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
@@ -28,7 +34,7 @@ public class ConsumeItemsStep extends RitualStep {
     }
 
     @Override
-    public TickResult tick(CenterGlyphBlockEntity glyph) {
+    public TickResult tick(CenterGlyphBlockEntity glyph, int time) {
         if (Objects.requireNonNull(glyph.getWorld()).getTime() % 20 == 0) {
             Ingredient ingredient = Objects.requireNonNull(this.ingredients.peek());
 
@@ -41,6 +47,15 @@ public class ConsumeItemsStep extends RitualStep {
                     entity.setStack(stack); // it should be tracked, but anyway
                     this.ingredients.poll();
                     // TODO: maybe spawn item remainder?
+
+                    PacketByteBuf buffer = PacketByteBufs.create();
+                    buffer.writeFloat(glyph.getPos().getX() + 0.5F);
+                    buffer.writeFloat(glyph.getPos().getY() + 0.25F);
+                    buffer.writeFloat(glyph.getPos().getZ() + 0.5F);
+                    buffer.writeVarInt(RitualEvent.CONSUME_ITEM.ordinal());
+
+                    PlayerLookup.tracking(glyph).forEach(p -> ServerPlayNetworking.send(p, BloodyRituals.createId("ritual_event"), buffer));
+
 
                     return this.ingredients.isEmpty() ? TickResult.COMPLETE : TickResult.CONTINUE;
                 }

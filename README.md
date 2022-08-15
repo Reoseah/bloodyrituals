@@ -27,10 +27,10 @@ In any case, he taught them a new way of performing their rituals. The gardens, 
 - [ ] Anemia effect – affected entities don't regenerate or something else – unsure
 
 - [ ] Ritual system:
-    * rituals performed by dropping items atop of a heart rune, then activating the rune and waiting for items to be consumed
-    * heart rune has to be surrounded by 4 normal runes, some rituals might use additional runes to shape the magic or increase the range of affected area
-    * rituals are paid with the health of caster or casters, most advanced rituals reduce health permanently (i.e. creating blood golems/homunculi)
-    * Boline covered in blood is used to target an entity in rituals (à la Witchery Taglock)
+  - [x] rituals performed by dropping items atop of a heart rune, then activating the rune and waiting for items to be consumed
+  - [x] heart rune has to be surrounded by 4 normal runes, some rituals might use additional runes to shape the magic or increase the range of affected area
+  - [ ] rituals are paid with the health of caster or casters, most advanced rituals reduce health permanently (i.e. creating blood golems/homunculi)
+  - [ ] Boline covered in blood is used to target an entity in rituals (à la Witchery Taglock)
 
 ## Rituals
 

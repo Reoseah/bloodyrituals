@@ -5,11 +5,13 @@ import io.github.reoseah.bloodyrituals.block.GlyphBlock;
 import io.github.reoseah.bloodyrituals.block.entity.CenterGlyphBlockEntity;
 import io.github.reoseah.bloodyrituals.item.BolineItem;
 import io.github.reoseah.bloodyrituals.recipe.RitualRecipe;
+import io.github.reoseah.bloodyrituals.ritual.RitualEvent;
 import io.github.reoseah.bloodyrituals.ritual.effect.RitualEffect;
 import io.github.reoseah.bloodyrituals.ritual.effect.TestEffect;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
@@ -18,6 +20,7 @@ import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
@@ -50,11 +53,25 @@ public class BloodyRituals implements ModInitializer {
         RecipeSerializers.register();
         RitualEffects.register();
 
-        // FIXME move to client side only
+        // FIXME move everything below to client side only
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.BLOOD_RUNE, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.CENTER_GLYPH, RenderLayer.getCutout());
 
         ModelPredicateProviderRegistry.register(Items.BOLINE, createId("has_target"), (stack, world, entity, seed) -> BolineItem.hasTarget(stack) ? 1F : 0F);
+
+        ClientPlayNetworking.registerGlobalReceiver(createId("ritual_event"), (client, handler, buffer, responseSender) -> {
+            float x = buffer.readFloat();
+            float y = buffer.readFloat();
+            float z = buffer.readFloat();
+
+            int i = buffer.readVarInt();
+            RitualEvent event = RitualEvent.values()[i];
+
+            ClientWorld world = handler.getWorld();
+            client.execute(() -> {
+                event.apply(world, x, y, z);
+            });
+        });
     }
 
     public static Identifier createId(String path) {

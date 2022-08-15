@@ -7,7 +7,7 @@ public abstract class RitualStep {
         CONTINUE, COMPLETE, ABORT; // TODO: sustain rituals while starting next one
     }
 
-    public abstract TickResult tick(CenterGlyphBlockEntity glyph);
+    public abstract TickResult tick(CenterGlyphBlockEntity glyph, int time);
 
     public void abort(CenterGlyphBlockEntity glyph) {
 
