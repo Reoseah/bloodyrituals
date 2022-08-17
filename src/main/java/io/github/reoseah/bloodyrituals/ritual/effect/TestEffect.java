@@ -15,7 +15,7 @@ public class TestEffect extends RitualEffect {
     public void addSteps(Collection<RitualStep> steps) {
         steps.add(new RitualStep() {
             @Override
-            public TickResult tick(CenterGlyphBlockEntity glyph, int time) {
+            public Result tick(CenterGlyphBlockEntity glyph, int time) {
                 if (time % 20 == 0) {
                     World world = Objects.requireNonNull(glyph.getWorld());
                     BlockPos pos = Objects.requireNonNull(glyph.getPos());
@@ -28,9 +28,9 @@ public class TestEffect extends RitualEffect {
                         }
                     }
 
-                    return TickResult.COMPLETE;
+                    return Result.COMPLETE;
                 }
-                return TickResult.CONTINUE;
+                return Result.CONTINUE;
             }
         });
     }

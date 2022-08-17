@@ -10,6 +10,8 @@ import net.minecraft.util.Util;
 public enum RitualEvent {
     START, CONSUME_ITEM;
 
+    // TODO: failure, killing entity, etc.; sounds or text messages?
+
     @Environment(value = EnvType.CLIENT)
     public void apply(ClientWorld world, float x, float y, float z) {
         for (int i = 0; i < 8; i++) {
@@ -21,7 +23,7 @@ public enum RitualEvent {
                 buf.writeFloat(1);
                 buf.writeFloat(0);
                 buf.writeFloat(0);
-                buf.writeFloat(1);
+                buf.writeFloat(1.5F);
             })), x2, y2, z2, 255, 0, 0);
         }
     }

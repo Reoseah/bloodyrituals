@@ -107,4 +107,12 @@ public class BolineItem extends SwordItem {
     public static boolean isTargetPlayer(ItemStack stack) {
         return stack.getNbt() != null && stack.getNbt().getBoolean("TargetIsPlayer");
     }
+
+    public static void removeTarget(ItemStack stack) {
+        if (stack.getNbt() != null) {
+            stack.removeSubNbt("TargetUUID");
+            stack.removeSubNbt("TargetName");
+            stack.removeSubNbt("TargetIsPlayer");
+        }
+    }
 }

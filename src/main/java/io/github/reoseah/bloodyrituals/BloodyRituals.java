@@ -6,6 +6,7 @@ import io.github.reoseah.bloodyrituals.block.entity.CenterGlyphBlockEntity;
 import io.github.reoseah.bloodyrituals.item.BolineItem;
 import io.github.reoseah.bloodyrituals.recipe.RitualRecipe;
 import io.github.reoseah.bloodyrituals.ritual.RitualEvent;
+import io.github.reoseah.bloodyrituals.ritual.effect.LifeTransfusionEffect;
 import io.github.reoseah.bloodyrituals.ritual.effect.RitualEffect;
 import io.github.reoseah.bloodyrituals.ritual.effect.TestEffect;
 import net.fabricmc.api.ModInitializer;
@@ -156,9 +157,11 @@ public class BloodyRituals implements ModInitializer {
 
     public static class RitualEffects {
         public static final RitualEffect TEST = new TestEffect();
+        public static final RitualEffect LIFE_TRANSFUSION = new LifeTransfusionEffect();
 
         public static void register() {
             register("test", TEST);
+            register("life_transfusion", LIFE_TRANSFUSION);
         }
 
         private static void register(String name, RitualEffect entry) {

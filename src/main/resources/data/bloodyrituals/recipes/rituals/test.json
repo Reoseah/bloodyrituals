@@ -8,5 +8,6 @@
       "item": "minecraft:diamond"
     }
   ],
+  "sacrifice": true,
   "effect": "bloodyrituals:test"
 }

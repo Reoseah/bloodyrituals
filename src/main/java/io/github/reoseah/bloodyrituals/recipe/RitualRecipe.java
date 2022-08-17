@@ -5,6 +5,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import io.github.reoseah.bloodyrituals.BloodyRituals;
 import io.github.reoseah.bloodyrituals.ritual.effect.RitualEffect;
+import io.github.reoseah.bloodyrituals.ritual.step.ConsumeItemsStep;
+import io.github.reoseah.bloodyrituals.ritual.step.LocateSacrificeStep;
+import io.github.reoseah.bloodyrituals.ritual.step.RitualStep;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -18,17 +21,28 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class RitualRecipe implements Recipe<Inventory> {
     public final Identifier id;
     public final DefaultedList<Ingredient> ingredients;
     public final RitualEffect effect;
+    public final boolean sacrifice;
 
-    public RitualRecipe(Identifier id, DefaultedList<Ingredient> ingredients, RitualEffect effect) {
+    public RitualRecipe(Identifier id, DefaultedList<Ingredient> ingredients, RitualEffect effect, boolean sacrifice) {
         this.id = id;
         this.ingredients = ingredients;
         this.effect = effect;
+        this.sacrifice = sacrifice;
+    }
+
+    public void addSteps(Collection<RitualStep> steps) {
+        steps.add(ConsumeItemsStep.of(this));
+        if (this.sacrifice) {
+            steps.add(new LocateSacrificeStep());
+        }
+        this.effect.addSteps(steps);
     }
 
     @Override
@@ -94,7 +108,8 @@ public class RitualRecipe implements Recipe<Inventory> {
                 throw new JsonParseException("No ingredients for ritual recipe");
             }
             RitualEffect effect = BloodyRituals.Registries.RITUAL_EFFECTS.get(new Identifier(JsonHelper.getString(json, "effect")));
-            return new RitualRecipe(id, ingredients, effect);
+            boolean sacrifice = JsonHelper.getBoolean(json, "sacrifice", false);
+            return new RitualRecipe(id, ingredients, effect, sacrifice);
         }
 
         private static DefaultedList<Ingredient> getIngredients(JsonArray json) {
@@ -116,7 +131,8 @@ public class RitualRecipe implements Recipe<Inventory> {
                 ingredients.set(i, Ingredient.fromPacket(buf));
             }
             RitualEffect effect = BloodyRituals.Registries.RITUAL_EFFECTS.get(buf.readIdentifier());
-            return new RitualRecipe(id, ingredients, effect);
+            boolean sacrifice = buf.readBoolean();
+            return new RitualRecipe(id, ingredients, effect, sacrifice);
         }
 
         @Override
@@ -126,6 +142,7 @@ public class RitualRecipe implements Recipe<Inventory> {
                 ingredient.write(buf);
             }
             buf.writeIdentifier(BloodyRituals.Registries.RITUAL_EFFECTS.getId(recipe.effect));
+            buf.writeBoolean(recipe.sacrifice);
         }
     }
 }

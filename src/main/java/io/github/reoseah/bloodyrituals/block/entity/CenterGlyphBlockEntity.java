@@ -3,7 +3,6 @@ package io.github.reoseah.bloodyrituals.block.entity;
 import io.github.reoseah.bloodyrituals.BloodyRituals;
 import io.github.reoseah.bloodyrituals.recipe.RitualRecipe;
 import io.github.reoseah.bloodyrituals.ritual.RitualEvent;
-import io.github.reoseah.bloodyrituals.ritual.step.ConsumeItemsStep;
 import io.github.reoseah.bloodyrituals.ritual.step.RitualStep;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -11,6 +10,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
@@ -28,6 +28,8 @@ import java.util.*;
 public class CenterGlyphBlockEntity extends BlockEntity {
     protected Queue<RitualStep> steps;
     protected int ticks;
+    protected PlayerEntity initiator;
+    protected LivingEntity sacrifice;
 
     public CenterGlyphBlockEntity(BlockPos pos, BlockState state) {
         super(BloodyRituals.BlockEntityTypes.CENTER_GLYPH, pos, state);
@@ -38,8 +40,8 @@ public class CenterGlyphBlockEntity extends BlockEntity {
             be.ticks++;
 
             RitualStep currentStep = be.steps.peek();
-            RitualStep.TickResult tickResult = currentStep.tick(be, be.ticks);
-            switch (tickResult) {
+            RitualStep.Result result = currentStep.tick(be, be.ticks);
+            switch (result) {
                 case ABORT -> {
                     for (RitualStep step : be.steps) {
                         step.abort(be);
@@ -74,8 +76,7 @@ public class CenterGlyphBlockEntity extends BlockEntity {
         Queue<RitualStep> steps = new ArrayDeque<>();
         for (RitualRecipe ritual : rituals) {
             if (ritual.matches(inventory, world)) {
-                steps.add(ConsumeItemsStep.of(ritual));
-                ritual.effect.addSteps(steps);
+                ritual.addSteps(steps);
             }
         }
 
@@ -83,17 +84,30 @@ public class CenterGlyphBlockEntity extends BlockEntity {
             this.steps = steps;
             this.ticks = 0;
 
-            PacketByteBuf buffer = PacketByteBufs.create();
-            buffer.writeFloat(this.pos.getX() + 0.5F);
-            buffer.writeFloat(this.pos.getY() + 0.25F);
-            buffer.writeFloat(this.pos.getZ() + 0.5F);
-            buffer.writeVarInt(RitualEvent.START.ordinal());
-
-            PlayerLookup.tracking(this).forEach(p -> ServerPlayNetworking.send(p, BloodyRituals.createId("ritual_event"), buffer));
+            this.sendEvent(RitualEvent.START, this.pos.getX() + 0.5F, this.pos.getY() + 0.25F, this.pos.getZ() + 0.5F);
 
             return ActionResult.SUCCESS;
         }
 
         return ActionResult.PASS;
+    }
+
+    public void sendEvent(RitualEvent type, float x, float y, float z) {
+        PacketByteBuf buffer = PacketByteBufs.create();
+        buffer.writeFloat(x);
+        buffer.writeFloat(y);
+        buffer.writeFloat(z);
+        buffer.writeVarInt(type.ordinal());
+
+        PlayerLookup.tracking(this).forEach(p -> ServerPlayNetworking.send(p, BloodyRituals.createId("ritual_event"), buffer));
+    }
+
+    public LivingEntity getSacrifice() {
+        return sacrifice;
+    }
+
+    public void setSacrifice(LivingEntity sacrifice) {
+        this.sacrifice = sacrifice;
+        this.markDirty();
     }
 }
